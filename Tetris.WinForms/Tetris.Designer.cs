@@ -35,15 +35,15 @@
             loadGame = new ToolStripMenuItem();
             gameExit = new ToolStripMenuItem();
             gameControls = new ToolStripMenuItem();
-            fourXsixteen = new ToolStripMenuItem();
-            eightXsixteen = new ToolStripMenuItem();
-            twelveXsixteen = new ToolStripMenuItem();
+            easyDiff = new ToolStripMenuItem();
+            mediumDiff = new ToolStripMenuItem();
+            hardDiff = new ToolStripMenuItem();
             pauseButton = new ToolStripMenuItem();
             statusStrip = new StatusStrip();
-            stripStatusLabel1 = new ToolStripStatusLabel();
-            stripStatusLabel = new ToolStripStatusLabel();
-            openFileDialog1 = new OpenFileDialog();
-            saveFileDialog1 = new SaveFileDialog();
+            TimerTextBox = new ToolStripStatusLabel();
+            Timer = new ToolStripStatusLabel();
+            openFile = new OpenFileDialog();
+            saveFile = new SaveFileDialog();
             Menu.SuspendLayout();
             statusStrip.SuspendLayout();
             SuspendLayout();
@@ -67,7 +67,7 @@
             // newGame
             // 
             newGame.Name = "newGame";
-            newGame.Size = new Size(139, 22);
+            newGame.Size = new Size(180, 22);
             newGame.Text = "New game";
             newGame.Click += newGame_Click;
             newGame.Paint += newGame_Paint;
@@ -75,14 +75,14 @@
             // saveGame
             // 
             saveGame.Name = "saveGame";
-            saveGame.Size = new Size(139, 22);
+            saveGame.Size = new Size(180, 22);
             saveGame.Text = "Save game..";
             saveGame.Click += saveGame_Click;
             // 
             // loadGame
             // 
             loadGame.Name = "loadGame";
-            loadGame.Size = new Size(139, 22);
+            loadGame.Size = new Size(180, 22);
             loadGame.Text = "Load game..";
             loadGame.Click += loadGame_Click;
             loadGame.Paint += loadGame_Paint;
@@ -90,37 +90,37 @@
             // gameExit
             // 
             gameExit.Name = "gameExit";
-            gameExit.Size = new Size(139, 22);
+            gameExit.Size = new Size(180, 22);
             gameExit.Text = "Exit";
             gameExit.Click += gameExit_Click;
             // 
             // gameControls
             // 
-            gameControls.DropDownItems.AddRange(new ToolStripItem[] { fourXsixteen, eightXsixteen, twelveXsixteen });
+            gameControls.DropDownItems.AddRange(new ToolStripItem[] { easyDiff, mediumDiff, hardDiff });
             gameControls.Name = "gameControls";
             gameControls.Size = new Size(50, 20);
             gameControls.Text = "Game";
             // 
-            // fourXsixteen
+            // easyDiff
             // 
-            fourXsixteen.Name = "fourXsixteen";
-            fourXsixteen.Size = new Size(110, 22);
-            fourXsixteen.Text = "4 x 16";
-            fourXsixteen.Click += fourXsixteen_Click;
+            easyDiff.Name = "easyDiff";
+            easyDiff.Size = new Size(180, 22);
+            easyDiff.Text = "4 x 16";
+            easyDiff.Click += fourXsixteen_Click;
             // 
-            // eightXsixteen
+            // mediumDiff
             // 
-            eightXsixteen.Name = "eightXsixteen";
-            eightXsixteen.Size = new Size(110, 22);
-            eightXsixteen.Text = "8 x 16";
-            eightXsixteen.Click += eightXsixteen_Click;
+            mediumDiff.Name = "mediumDiff";
+            mediumDiff.Size = new Size(180, 22);
+            mediumDiff.Text = "8 x 16";
+            mediumDiff.Click += eightXsixteen_Click;
             // 
-            // twelveXsixteen
+            // hardDiff
             // 
-            twelveXsixteen.Name = "twelveXsixteen";
-            twelveXsixteen.Size = new Size(110, 22);
-            twelveXsixteen.Text = "12 x 16";
-            twelveXsixteen.Click += twelveXsixteen_Click;
+            hardDiff.Name = "hardDiff";
+            hardDiff.Size = new Size(180, 22);
+            hardDiff.Text = "12 x 16";
+            hardDiff.Click += twelveXsixteen_Click;
             // 
             // pauseButton
             // 
@@ -131,33 +131,33 @@
             // 
             // statusStrip
             // 
-            statusStrip.Items.AddRange(new ToolStripItem[] { stripStatusLabel1, stripStatusLabel });
+            statusStrip.Items.AddRange(new ToolStripItem[] { TimerTextBox, Timer });
             statusStrip.Location = new Point(0, 739);
             statusStrip.Name = "statusStrip";
             statusStrip.Size = new Size(482, 22);
             statusStrip.TabIndex = 1;
             statusStrip.Text = "statusStrip";
             // 
-            // stripStatusLabel1
+            // TimerTextBox
             // 
-            stripStatusLabel1.Name = "stripStatusLabel1";
-            stripStatusLabel1.Size = new Size(36, 17);
-            stripStatusLabel1.Text = "Time:";
+            TimerTextBox.Name = "TimerTextBox";
+            TimerTextBox.Size = new Size(36, 17);
+            TimerTextBox.Text = "Time:";
             // 
-            // stripStatusLabel
+            // Timer
             // 
-            stripStatusLabel.Name = "stripStatusLabel";
-            stripStatusLabel.Size = new Size(13, 17);
-            stripStatusLabel.Text = "0";
+            Timer.Name = "Timer";
+            Timer.Size = new Size(49, 17);
+            Timer.Text = "00:00:00";
             // 
-            // openFileDialog1
+            // openFile
             // 
-            openFileDialog1.FileName = "openFileDialog1";
-            openFileDialog1.Filter = "Tetris tábla (*.save)|*.save";
+            openFile.FileName = "openFileDialog1";
+            openFile.Filter = "Tetris tábla (*.save)|*.save";
             // 
-            // saveFileDialog1
+            // saveFile
             // 
-            saveFileDialog1.Filter = "Tetris tábla (*.save)|*.save";
+            saveFile.Filter = "Tetris tábla (*.save)|*.save";
             // 
             // Tetris
             // 
@@ -188,14 +188,14 @@
         private ToolStripMenuItem loadGame;
         private ToolStripMenuItem gameExit;
         private ToolStripMenuItem gameControls;
-        private ToolStripMenuItem fourXsixteen;
-        private ToolStripMenuItem eightXsixteen;
-        private ToolStripMenuItem twelveXsixteen;
+        private ToolStripMenuItem easyDiff;
+        private ToolStripMenuItem mediumDiff;
+        private ToolStripMenuItem hardDiff;
         private StatusStrip statusStrip;
-        private ToolStripStatusLabel stripStatusLabel1;
+        private ToolStripStatusLabel TimerTextBox;
         private ToolStripMenuItem pauseButton;
-        private ToolStripStatusLabel stripStatusLabel;
-        private OpenFileDialog openFileDialog1;
-        private SaveFileDialog saveFileDialog1;
+        private ToolStripStatusLabel Timer;
+        private OpenFileDialog openFile;
+        private SaveFileDialog saveFile;
     }
 }

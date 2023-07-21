@@ -16,11 +16,11 @@ namespace Tetris.WinForms
         private ITetrisDataAccess _dataAccess = null!;
 
         private TetrisGameModel _tetris = null!;
-        
+
         private Timer _timerForStatusBar = null!;
-        
+
         private Timer _gameTimer = null!;
-        
+
         private int _gameTime;
         #endregion
 
@@ -110,12 +110,7 @@ namespace Tetris.WinForms
                     _gameTimer.Stop();
                     _timerForStatusBar.Stop();
 
-                    double time = Convert.ToDouble(stripStatusLabel.Text);
-                    int minute = (int)time / 60;
-                    int hour = (int)time / 3600;
-                    int sec = (int)time % 60;
-
-                    MessageBox.Show("Game over. Time spent on a game: " + hour + " hour " + minute + " minutes and " + sec + " seconds.",
+                    MessageBox.Show("Game over. Time spent on a game: " + _gameTime / 60 + " hour " + _gameTime / 3600 + " minutes and " + _gameTime % 60 + " seconds.",
                         "Tetris",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Asterisk);
@@ -172,9 +167,9 @@ namespace Tetris.WinForms
 
         private void SetupMenus()
         {
-            fourXsixteen.Checked = (_tetris.Difficulty == GameDifficulty.Easy);
-            eightXsixteen.Checked = (_tetris.Difficulty == GameDifficulty.Medium);
-            twelveXsixteen.Checked = (_tetris.Difficulty == GameDifficulty.Hard);
+            easyDiff.Checked = (_tetris.Difficulty == GameDifficulty.Easy);
+            mediumDiff.Checked = (_tetris.Difficulty == GameDifficulty.Medium);
+            hardDiff.Checked = (_tetris.Difficulty == GameDifficulty.Hard);
         }
         private void LoadGame()
         {
@@ -201,7 +196,11 @@ namespace Tetris.WinForms
 
         private void UpdateStatusBar(object? sender, EventArgs e)
         {
-            stripStatusLabel.Text = (++_gameTime).ToString();
+            ++_gameTime;
+            int minute = _gameTime / 60;
+            int hour = _gameTime / 3600;
+            int sec = _gameTime % 60;
+            Timer.Text = (hour < 10 ? "0" + hour : hour) + ":" + (minute < 10 ? "0" + minute : minute) + ":" + (sec < 10 ? "0" + sec : sec);
         }
 
         private void OnPaint(object sender, PaintEventArgs e)
@@ -247,12 +246,12 @@ namespace Tetris.WinForms
             _timerForStatusBar.Stop();
             _tetris.ResetArea();
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            if (saveFile.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     // játé mentése
-                    await _tetris.SaveGameAsync(saveFileDialog1.FileName);
+                    await _tetris.SaveGameAsync(saveFile.FileName);
                 }
                 catch (TetrisDataEcxeption)
                 {
@@ -273,11 +272,11 @@ namespace Tetris.WinForms
             _gameTimer.Stop();
             _timerForStatusBar.Stop();
 
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openFile.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    await _tetris.LoadGameAsync(openFileDialog1.FileName);
+                    await _tetris.LoadGameAsync(openFile.FileName);
                     saveGame.Enabled = true;
                     LoadGame();
                 }
