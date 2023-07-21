@@ -31,12 +31,12 @@ namespace TetrisTest
         {
             _model.NewGame();
 
-            Assert.AreEqual(GameDifficulty.Medium, _model.diff);
+            Assert.AreEqual(GameDifficulty.Medium, _model.Difficulty);
 
             Int32 emptyFields = 0;
-            for (Int32 i = 0; i < _model.status.mapY; i++)
-                for (Int32 j = 0; j < _model.status.mapX; j++)
-                    if (_model.status.map[i, j] == 0)
+            for (Int32 i = 0; i < _model.Map.Rows; i++)
+                for (Int32 j = 0; j < _model.Map.Columns; j++)
+                    if (_model.Map.GetValue(i, j) == 0)
                         emptyFields++;
 
             Assert.AreEqual(128, emptyFields);
@@ -45,15 +45,15 @@ namespace TetrisTest
         [TestMethod]
         public void TetrisGameModelNewGameEasyTest()
         {
-            _model.diff = GameDifficulty.Easy;
+            _model.Difficulty = GameDifficulty.Easy;
             _model.NewGame();
 
-            Assert.AreEqual(GameDifficulty.Easy, _model.diff);
+            Assert.AreEqual(GameDifficulty.Easy, _model.Difficulty);
 
             Int32 emptyFields = 0;
-            for (Int32 i = 0; i < _model.status.mapY; i++)
-                for (Int32 j = 0; j < _model.status.mapX; j++)
-                    if (_model.status.map[i, j] == 0)
+            for (Int32 i = 0; i < _model.Map.Rows; i++)
+                for (Int32 j = 0; j < _model.Map.Columns; j++)
+                    if (_model.Map.GetValue(i, j) == 0)
                         emptyFields++;
 
             Assert.AreEqual(64, emptyFields);
@@ -62,15 +62,15 @@ namespace TetrisTest
         [TestMethod]
         public void TetrisGameModelNewGameHardTest()
         {
-            _model.diff = GameDifficulty.Hard;
+            _model.Difficulty = GameDifficulty.Hard;
             _model.NewGame();
 
-            Assert.AreEqual(GameDifficulty.Hard, _model.diff);
+            Assert.AreEqual(GameDifficulty.Hard, _model.Difficulty);
 
             Int32 emptyFields = 0;
-            for (Int32 i = 0; i < _model.status.mapY; i++)
-                for (Int32 j = 0; j < _model.status.mapX; j++)
-                    if (_model.status.map[i, j] == 0)
+            for (Int32 i = 0; i < _model.Map.Rows; i++)
+                for (Int32 j = 0; j < _model.Map.Columns; j++)
+                    if (_model.Map.GetValue(i, j) == 0)
                         emptyFields++;
 
             Assert.AreEqual(192, emptyFields);
@@ -83,10 +83,10 @@ namespace TetrisTest
 
             await _model.LoadGameAsync(String.Empty);
 
-            for (Int32 i = 0; i < _model.status.mapY; i++)
-                for (Int32 j = 0; j < _model.status.mapX; j++)
+            for (Int32 i = 0; i < _model.Map.Rows; i++)
+                for (Int32 j = 0; j < _model.Map.Columns; j++)
                 {
-                    Assert.AreEqual(_mockedTable.map[i, j], _model.status.map[i, j]);
+                    Assert.AreEqual(_mockedTable.GetValue(i, j), _model.Map.GetValue(i, j));
                 }
 
             _mock.Verify(dataAccess => dataAccess.LoadAsync(String.Empty), Times.Once());

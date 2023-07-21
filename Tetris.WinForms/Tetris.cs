@@ -250,7 +250,6 @@ namespace Tetris.WinForms
             {
                 try
                 {
-                    // játé mentése
                     await _tetris.SaveGameAsync(saveFile.FileName);
                 }
                 catch (TetrisDataEcxeption)
