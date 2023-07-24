@@ -15,7 +15,7 @@ namespace Tetris.WinForms
         #region Variables
         private ITetrisDataAccess _dataAccess = null!;
 
-        private TetrisGameModel _tetris = null!;
+        private TetrisGameModel _tetrisGame = null!;
 
         private Timer _timerForStatusBar = null!;
 
@@ -24,13 +24,17 @@ namespace Tetris.WinForms
         private int _gameTime;
         #endregion
 
+        #region Properties
+        public TetrisGameModel TetrisGame { get { return _tetrisGame; } }
+        #endregion
+
         #region Constructor
-        public Tetris()
+        public Tetris(GameDifficulty difficulty, ITetrisDataAccess _dataAccess)
         {
             InitializeComponent();
             KeyUp += new KeyEventHandler(Keyboard);
             _dataAccess = new TetrisDataAccess();
-            _tetris = new TetrisGameModel(GameDifficulty.Medium, _dataAccess);
+            _tetrisGame = new TetrisGameModel(difficulty, _dataAccess);
             SetupMenus();
 
             _timerForStatusBar = new Timer();
@@ -55,29 +59,29 @@ namespace Tetris.WinForms
             switch (e.KeyCode)
             {
                 case Keys.Space:
-                    if (!_tetris.IsIntersects())
+                    if (!_tetrisGame.IsIntersects())
                     {
-                        _tetris.ResetArea();
-                        _tetris.ShapeGameModel.RotateShape();
-                        _tetris.Merge();
+                        _tetrisGame.ResetArea();
+                        _tetrisGame.ShapeGameModel.RotateShape();
+                        _tetrisGame.Merge();
                         Refresh();
                     }
                     break;
                 case Keys.Right:
-                    if (!_tetris.CollideHorizontally("right")) // jobb
+                    if (!_tetrisGame.CollideHorizontally("right")) // jobb
                     {
-                        _tetris.ResetArea(); // видалаємо все
-                        _tetris.ShapeGameModel.MoveRight(); // рухаємо
-                        _tetris.Merge();
+                        _tetrisGame.ResetArea(); // видалаємо все
+                        _tetrisGame.ShapeGameModel.MoveRight(); // рухаємо
+                        _tetrisGame.Merge();
                         Refresh();
                     }
                     break;
                 case Keys.Left:
-                    if (!_tetris.CollideHorizontally("left")) // bal
+                    if (!_tetrisGame.CollideHorizontally("left")) // bal
                     {
-                        _tetris.ResetArea();
-                        _tetris.ShapeGameModel.MoveLeft();
-                        _tetris.Merge();
+                        _tetrisGame.ResetArea();
+                        _tetrisGame.ShapeGameModel.MoveLeft();
+                        _tetrisGame.Merge();
                         Refresh();
                     }
                     break;
@@ -86,26 +90,26 @@ namespace Tetris.WinForms
 
         private void UpdateMap(object? sender, EventArgs e)
         {
-            _tetris.ResetArea();
-            if (!_tetris.Collide())
+            _tetrisGame.ResetArea();
+            if (!_tetrisGame.Collide())
             {
-                _tetris.ShapeGameModel.MoveDown();
+                _tetrisGame.ShapeGameModel.MoveDown();
             }
             else
             {
-                _tetris.Merge();
-                _tetris.SliceMap();
+                _tetrisGame.Merge();
+                _tetrisGame.SliceMap();
 
-                if (_tetris.Difficulty == GameDifficulty.Easy)
-                    _tetris.ShapeGameModel = new ShapeGameModel(0, 0, GameDifficulty.Easy);
+                if (_tetrisGame.Difficulty == GameDifficulty.Easy)
+                    _tetrisGame.ShapeGameModel = new ShapeGameModel(0, 0, GameDifficulty.Easy);
 
-                if (_tetris.Difficulty == GameDifficulty.Medium)
-                    _tetris.ShapeGameModel = new ShapeGameModel(3, 0, GameDifficulty.Medium);
+                if (_tetrisGame.Difficulty == GameDifficulty.Medium)
+                    _tetrisGame.ShapeGameModel = new ShapeGameModel(3, 0, GameDifficulty.Medium);
 
-                if (_tetris.Difficulty == GameDifficulty.Hard)
-                    _tetris.ShapeGameModel = new ShapeGameModel(5, 0, GameDifficulty.Hard);
+                if (_tetrisGame.Difficulty == GameDifficulty.Hard)
+                    _tetrisGame.ShapeGameModel = new ShapeGameModel(5, 0, GameDifficulty.Hard);
 
-                if (_tetris.Collide())
+                if (_tetrisGame.Collide())
                 {
                     _gameTimer.Stop();
                     _timerForStatusBar.Stop();
@@ -118,35 +122,35 @@ namespace Tetris.WinForms
                     Close();
                 }
             }
-            _tetris.Merge();
+            _tetrisGame.Merge();
             Refresh();
         }
 
         private void DrawMap(Graphics e) // за допомогою цієї фугкції ми зафарбовуємо ці шматки, які мають не 0 значення
         {
-            for (int i = 0; i < _tetris.Map.Rows; i++)
+            for (int i = 0; i < _tetrisGame.Map.Rows; i++)
             {
-                for (int j = 0; j < _tetris.Map.Columns; j++)
+                for (int j = 0; j < _tetrisGame.Map.Columns; j++)
                 {
-                    if (_tetris.Map.GetValue(i, j) == 1)
+                    if (_tetrisGame.Map.GetValue(i, j) == 1)
                     {
-                        e.FillRectangle(Brushes.Red, new Rectangle(50 + j * (_tetris.Map.FieldSize) + 1, 50 + i * (_tetris.Map.FieldSize) + 1, _tetris.Map.FieldSize - 1, _tetris.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.Red, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
-                    if (_tetris.Map.GetValue(i, j) == 2)
+                    if (_tetrisGame.Map.GetValue(i, j) == 2)
                     {
-                        e.FillRectangle(Brushes.Yellow, new Rectangle(50 + j * (_tetris.Map.FieldSize) + 1, 50 + i * (_tetris.Map.FieldSize) + 1, _tetris.Map.FieldSize - 1, _tetris.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.Yellow, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
-                    if (_tetris.Map.GetValue(i, j) == 3)
+                    if (_tetrisGame.Map.GetValue(i, j) == 3)
                     {
-                        e.FillRectangle(Brushes.Green, new Rectangle(50 + j * (_tetris.Map.FieldSize) + 1, 50 + i * (_tetris.Map.FieldSize) + 1, _tetris.Map.FieldSize - 1, _tetris.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.Green, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
-                    if (_tetris.Map.GetValue(i, j) == 4)
+                    if (_tetrisGame.Map.GetValue(i, j) == 4)
                     {
-                        e.FillRectangle(Brushes.Blue, new Rectangle(50 + j * (_tetris.Map.FieldSize) + 1, 50 + i * (_tetris.Map.FieldSize) + 1, _tetris.Map.FieldSize - 1, _tetris.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.Blue, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
-                    if (_tetris.Map.GetValue(i, j) == 5)
+                    if (_tetrisGame.Map.GetValue(i, j) == 5)
                     {
-                        e.FillRectangle(Brushes.Violet, new Rectangle(50 + j * (_tetris.Map.FieldSize) + 1, 50 + i * (_tetris.Map.FieldSize) + 1, _tetris.Map.FieldSize - 1, _tetris.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.Violet, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
                 }
             }
@@ -154,45 +158,23 @@ namespace Tetris.WinForms
 
         private void DrawGrid(Graphics g)
         {
-            for (int i = 0; i <= _tetris.Map.Rows; i++)
+            for (int i = 0; i <= _tetrisGame.Map.Rows; i++)
             {
-                g.DrawLine(Pens.Black, new Point(50, 50 + i * _tetris.Map.FieldSize), new Point(50 + _tetris.Map.Columns * _tetris.Map.FieldSize, 50 + i * _tetris.Map.FieldSize));
+                g.DrawLine(Pens.Black, new Point(50, 50 + i * _tetrisGame.Map.FieldSize), new Point(50 + _tetrisGame.Map.Columns * _tetrisGame.Map.FieldSize, 50 + i * _tetrisGame.Map.FieldSize));
             }
 
-            for (int i = 0; i <= _tetris.Map.Columns; i++)
+            for (int i = 0; i <= _tetrisGame.Map.Columns; i++)
             {
-                g.DrawLine(Pens.Black, new Point(50 + i * _tetris.Map.FieldSize, 50), new Point(50 + i * _tetris.Map.FieldSize, 50 + _tetris.Map.Rows * _tetris.Map.FieldSize));
+                g.DrawLine(Pens.Black, new Point(50 + i * _tetrisGame.Map.FieldSize, 50), new Point(50 + i * _tetrisGame.Map.FieldSize, 50 + _tetrisGame.Map.Rows * _tetrisGame.Map.FieldSize));
             }
         }
 
         private void SetupMenus()
         {
-            easyDiff.Checked = (_tetris.Difficulty == GameDifficulty.Easy);
-            mediumDiff.Checked = (_tetris.Difficulty == GameDifficulty.Medium);
-            hardDiff.Checked = (_tetris.Difficulty == GameDifficulty.Hard);
+            easyDiff.Checked = (_tetrisGame.Difficulty == GameDifficulty.Easy);
+            mediumDiff.Checked = (_tetrisGame.Difficulty == GameDifficulty.Medium);
+            hardDiff.Checked = (_tetrisGame.Difficulty == GameDifficulty.Hard);
         }
-        private void LoadGame()
-        {
-            if (_tetris.Map.Columns == 4)
-            {
-                _tetris.Difficulty = GameDifficulty.Easy;
-                _tetris.ShapeGameModel = new ShapeGameModel(0, 0, GameDifficulty.Easy);
-                _gameTime = 0;
-            }
-            else if (_tetris.Map.Columns == 8)
-            {
-                _tetris.Difficulty = GameDifficulty.Medium;
-                _tetris.ShapeGameModel = new ShapeGameModel(3, 0, GameDifficulty.Medium);
-                _gameTime = 0;
-            }
-            else
-            {
-                _tetris.Difficulty = GameDifficulty.Hard;
-                _tetris.ShapeGameModel = new ShapeGameModel(5, 0, GameDifficulty.Hard);
-                _gameTime = 0;
-            }
-        }
-
 
         private void UpdateStatusBar(object? sender, EventArgs e)
         {
@@ -209,29 +191,14 @@ namespace Tetris.WinForms
             DrawMap(e.Graphics);
         }
 
-        private void fourXsixteen_Click(object sender, EventArgs e)
-        {
-            _tetris.Difficulty = GameDifficulty.Easy;
-        }
-
-        private void eightXsixteen_Click(object sender, EventArgs e)
-        {
-            _tetris.Difficulty = GameDifficulty.Medium;
-        }
-
-        private void twelveXsixteen_Click(object sender, EventArgs e)
-        {
-            _tetris.Difficulty = GameDifficulty.Hard;
-        }
-
         private void newGame_Click(object sender, EventArgs e)
         {
-            _tetris.NewGame();
-            for (int i = 0; i < _tetris.Map.Rows; i++)
+            _tetrisGame.NewGame();
+            for (int i = 0; i < _tetrisGame.Map.Rows; i++)
             {
-                for (int j = 0; j < _tetris.Map.Columns; j++)
+                for (int j = 0; j < _tetrisGame.Map.Columns; j++)
                 {
-                    _tetris.Map.SetValue(i, j, 0);
+                    _tetrisGame.Map.SetValue(i, j, 0);
                 }
             }
             _gameTime = 0;
@@ -244,13 +211,13 @@ namespace Tetris.WinForms
             Boolean restartTimer = _gameTimer.Enabled;
             _gameTimer.Stop();
             _timerForStatusBar.Stop();
-            _tetris.ResetArea();
+            _tetrisGame.ResetArea();
 
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    await _tetris.SaveGameAsync(saveFile.FileName);
+                    await _tetrisGame.SaveGameAsync(saveFile.FileName);
                 }
                 catch (TetrisDataEcxeption)
                 {
@@ -275,7 +242,7 @@ namespace Tetris.WinForms
             {
                 try
                 {
-                    await _tetris.LoadGameAsync(openFile.FileName);
+                    await _tetrisGame.LoadGameAsync(openFile.FileName);
                     saveGame.Enabled = true;
                     LoadGame();
                 }
@@ -283,10 +250,9 @@ namespace Tetris.WinForms
                 {
                     MessageBox.Show("Can not download the game!" + Environment.NewLine + "The file path is uncorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    _tetris.NewGame();
+                    _tetrisGame.NewGame();
                     saveGame.Enabled = true;
                 }
-
             }
 
             if (restartTimer)
@@ -294,30 +260,6 @@ namespace Tetris.WinForms
                 _gameTimer.Start();
                 _timerForStatusBar.Start();
             }
-        }
-
-        private void gameExit_Click(object sender, EventArgs e)
-        {
-            Boolean restartTimer = _gameTimer.Enabled;
-            _gameTimer.Stop();
-
-            if (MessageBox.Show("Tou sure you want to leave the game?", "Tetris", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                Close();
-            }
-            else
-            {
-                if (restartTimer)
-                {
-                    _gameTimer.Start();
-                }
-            }
-        }
-
-        private void newGame_Paint(object sender, PaintEventArgs e)
-        {
-            DrawGrid(e.Graphics);
-            DrawMap(e.Graphics);
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
@@ -336,11 +278,77 @@ namespace Tetris.WinForms
             }
         }
 
+        private void Tetris_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Boolean restartTimer = _gameTimer.Enabled;
+            _gameTimer.Stop();
+
+            if (MessageBox.Show("Tou sure you want to leave the game?", "Tetris", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Close();
+            }
+            else
+            {
+                if (restartTimer)
+                {
+                    _gameTimer.Start();
+                }
+            }
+        }
+
+        private void easyDiff_Click(object sender, EventArgs e)
+        {
+            _tetrisGame.Difficulty = GameDifficulty.Easy;
+        }
+
+        private void mediumDiff_Click(object sender, EventArgs e)
+        {
+            _tetrisGame.Difficulty = GameDifficulty.Medium;
+        }
+
+        private void hardDiff_Click(object sender, EventArgs e)
+        {
+            _tetrisGame.Difficulty = GameDifficulty.Hard;
+        }
+
+        private void newGame_Paint(object sender, PaintEventArgs e)
+        {
+            DrawGrid(e.Graphics);
+            DrawMap(e.Graphics);
+        }
+
         private void loadGame_Paint(object sender, PaintEventArgs e)
         {
             DrawGrid(e.Graphics);
             DrawMap(e.Graphics);
         }
         #endregion
+
+        #region Public methods
+        public void LoadGame()
+        {
+            if (_tetrisGame.Map.Columns == 4)
+            {
+                _tetrisGame.Difficulty = GameDifficulty.Easy;
+                _tetrisGame.ShapeGameModel = new ShapeGameModel(0, 0, GameDifficulty.Easy);
+                _gameTime = 0;
+            }
+            else if (_tetrisGame.Map.Columns == 8)
+            {
+                _tetrisGame.Difficulty = GameDifficulty.Medium;
+                _tetrisGame.ShapeGameModel = new ShapeGameModel(3, 0, GameDifficulty.Medium);
+                _gameTime = 0;
+            }
+            else
+            {
+                _tetrisGame.Difficulty = GameDifficulty.Hard;
+                _tetrisGame.ShapeGameModel = new ShapeGameModel(5, 0, GameDifficulty.Hard);
+                _gameTime = 0;
+            }
+
+            SetupMenus();
+        }
+        #endregion
+
     }
 }

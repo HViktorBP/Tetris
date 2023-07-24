@@ -33,7 +33,6 @@
             newGame = new ToolStripMenuItem();
             saveGame = new ToolStripMenuItem();
             loadGame = new ToolStripMenuItem();
-            gameExit = new ToolStripMenuItem();
             gameControls = new ToolStripMenuItem();
             easyDiff = new ToolStripMenuItem();
             mediumDiff = new ToolStripMenuItem();
@@ -59,7 +58,7 @@
             // 
             // gameSettings
             // 
-            gameSettings.DropDownItems.AddRange(new ToolStripItem[] { newGame, saveGame, loadGame, gameExit });
+            gameSettings.DropDownItems.AddRange(new ToolStripItem[] { newGame, saveGame, loadGame });
             gameSettings.Name = "gameSettings";
             gameSettings.Size = new Size(61, 20);
             gameSettings.Text = "Settings";
@@ -76,23 +75,16 @@
             // 
             saveGame.Name = "saveGame";
             saveGame.Size = new Size(180, 22);
-            saveGame.Text = "Save game..";
+            saveGame.Text = "Save game...";
             saveGame.Click += saveGame_Click;
             // 
             // loadGame
             // 
             loadGame.Name = "loadGame";
             loadGame.Size = new Size(180, 22);
-            loadGame.Text = "Load game..";
+            loadGame.Text = "Load game...";
             loadGame.Click += loadGame_Click;
             loadGame.Paint += loadGame_Paint;
-            // 
-            // gameExit
-            // 
-            gameExit.Name = "gameExit";
-            gameExit.Size = new Size(180, 22);
-            gameExit.Text = "Exit";
-            gameExit.Click += gameExit_Click;
             // 
             // gameControls
             // 
@@ -104,23 +96,23 @@
             // easyDiff
             // 
             easyDiff.Name = "easyDiff";
-            easyDiff.Size = new Size(180, 22);
+            easyDiff.Size = new Size(110, 22);
             easyDiff.Text = "4 x 16";
-            easyDiff.Click += fourXsixteen_Click;
+            easyDiff.Click += easyDiff_Click;
             // 
             // mediumDiff
             // 
             mediumDiff.Name = "mediumDiff";
-            mediumDiff.Size = new Size(180, 22);
+            mediumDiff.Size = new Size(110, 22);
             mediumDiff.Text = "8 x 16";
-            mediumDiff.Click += eightXsixteen_Click;
+            mediumDiff.Click += mediumDiff_Click;
             // 
             // hardDiff
             // 
             hardDiff.Name = "hardDiff";
-            hardDiff.Size = new Size(180, 22);
+            hardDiff.Size = new Size(110, 22);
             hardDiff.Text = "12 x 16";
-            hardDiff.Click += twelveXsixteen_Click;
+            hardDiff.Click += hardDiff_Click;
             // 
             // pauseButton
             // 
@@ -170,6 +162,7 @@
             MainMenuStrip = Menu;
             Name = "Tetris";
             Text = "Tetris";
+            FormClosed += Tetris_FormClosed;
             Paint += OnPaint;
             Menu.ResumeLayout(false);
             Menu.PerformLayout();
@@ -186,7 +179,6 @@
         private ToolStripMenuItem newGame;
         private ToolStripMenuItem saveGame;
         private ToolStripMenuItem loadGame;
-        private ToolStripMenuItem gameExit;
         private ToolStripMenuItem gameControls;
         private ToolStripMenuItem easyDiff;
         private ToolStripMenuItem mediumDiff;
