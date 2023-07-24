@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Tetris));
             Menu = new MenuStrip();
             gameSettings = new ToolStripMenuItem();
             newGame = new ToolStripMenuItem();
@@ -66,7 +67,7 @@
             // newGame
             // 
             newGame.Name = "newGame";
-            newGame.Size = new Size(180, 22);
+            newGame.Size = new Size(142, 22);
             newGame.Text = "New game";
             newGame.Click += newGame_Click;
             newGame.Paint += newGame_Paint;
@@ -74,14 +75,14 @@
             // saveGame
             // 
             saveGame.Name = "saveGame";
-            saveGame.Size = new Size(180, 22);
+            saveGame.Size = new Size(142, 22);
             saveGame.Text = "Save game...";
             saveGame.Click += saveGame_Click;
             // 
             // loadGame
             // 
             loadGame.Name = "loadGame";
-            loadGame.Size = new Size(180, 22);
+            loadGame.Size = new Size(142, 22);
             loadGame.Text = "Load game...";
             loadGame.Click += loadGame_Click;
             loadGame.Paint += loadGame_Paint;
@@ -159,6 +160,7 @@
             Controls.Add(statusStrip);
             Controls.Add(Menu);
             DoubleBuffered = true;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = Menu;
             Name = "Tetris";
             Text = "Tetris";
