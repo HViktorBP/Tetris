@@ -66,7 +66,7 @@ namespace Tetris.Presistence
 
                     for (int i = 0; i < table.Rows; i++)
                     {
-                        for (int j = 0; j < table.Columns; i++)
+                        for (int j = 0; j < table.Columns; j++)
                         {
                             await writer.WriteAsync(table.GetValue(i, j) + " ");
                         }

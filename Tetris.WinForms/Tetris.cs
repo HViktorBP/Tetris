@@ -26,9 +26,31 @@ namespace Tetris.WinForms
 
         #region Properties
         public TetrisGameModel TetrisGame { get { return _tetrisGame; } }
+        public Timer GameTimer { get { return _gameTimer; } }
         #endregion
 
         #region Constructor
+        public Tetris()
+        {
+            InitializeComponent();
+            KeyUp += new KeyEventHandler(Keyboard);
+            _dataAccess = new TetrisDataAccess();
+            _tetrisGame = new TetrisGameModel(GameDifficulty.Easy, _dataAccess);
+
+            _timerForStatusBar = new Timer();
+            _timerForStatusBar.Interval = 1000;
+            _timerForStatusBar.Tick += new EventHandler(UpdateStatusBar);
+
+            _gameTimer = new Timer();
+            _gameTimer.Interval = 500;
+            _gameTimer.Tick += new EventHandler(UpdateMap);
+
+            _gameTime = 0;
+            _gameTimer.Start();
+            _timerForStatusBar.Start();
+
+            Refresh();
+        }
         public Tetris(GameDifficulty difficulty, ITetrisDataAccess _dataAccess)
         {
             InitializeComponent();
@@ -221,7 +243,7 @@ namespace Tetris.WinForms
                 }
                 catch (TetrisDataEcxeption)
                 {
-                    MessageBox.Show("Can not download the game!" + Environment.NewLine + "The file path is uncorrect or the library can't be written.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Can not save the game!" + Environment.NewLine + "The file path is uncorrect or the library can't be written.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 

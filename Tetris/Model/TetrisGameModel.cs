@@ -193,6 +193,7 @@ namespace Tetris.Model
                     break;
             }
         }
+
         public async Task LoadGameAsync(String path)
         {
             if (_dataAccess == null)

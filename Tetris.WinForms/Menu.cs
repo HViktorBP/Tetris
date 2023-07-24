@@ -47,12 +47,15 @@ namespace Tetris.WinForms
             {
                 try
                 {
+                    _tetris = new Tetris();
                     await _tetris.TetrisGame.LoadGameAsync(openFile.FileName);
                     _tetris.LoadGame();
+                    _tetris.ShowDialog();
                 }
                 catch (TetrisDataEcxeption)
                 {
                     MessageBox.Show("Can not download the game!" + Environment.NewLine + "The file path is uncorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _tetris.GameTimer.Stop();
                 }
             }
         }
