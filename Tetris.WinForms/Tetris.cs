@@ -51,6 +51,7 @@ namespace Tetris.WinForms
 
             Refresh();
         }
+
         public Tetris(GameDifficulty difficulty, ITetrisDataAccess _dataAccess)
         {
             InitializeComponent();
@@ -116,6 +117,7 @@ namespace Tetris.WinForms
             if (!_tetrisGame.Collide())
             {
                 _tetrisGame.ShapeGameModel.MoveDown();
+                _tetrisGame.Merge();
             }
             else
             {
@@ -131,6 +133,7 @@ namespace Tetris.WinForms
                 if (_tetrisGame.Difficulty == GameDifficulty.Hard)
                     _tetrisGame.ShapeGameModel = new ShapeGameModel(5, 0, GameDifficulty.Hard);
 
+
                 if (_tetrisGame.Collide())
                 {
                     _gameTimer.Stop();
@@ -140,15 +143,12 @@ namespace Tetris.WinForms
                         "Tetris",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Asterisk);
-
-                    Close();
                 }
             }
-            _tetrisGame.Merge();
             Refresh();
         }
 
-        private void DrawMap(Graphics e) // за допомогою цієї фугкції ми зафарбовуємо ці шматки, які мають не 0 значення
+        private void DrawMap(Graphics e) 
         {
             for (int i = 0; i < _tetrisGame.Map.Rows; i++)
             {
@@ -172,7 +172,7 @@ namespace Tetris.WinForms
                     }
                     if (_tetrisGame.Map.GetValue(i, j) == 5)
                     {
-                        e.FillRectangle(Brushes.Violet, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.Orange, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
                 }
             }
@@ -182,12 +182,12 @@ namespace Tetris.WinForms
         {
             for (int i = 0; i <= _tetrisGame.Map.Rows; i++)
             {
-                g.DrawLine(Pens.Black, new Point(50, 50 + i * _tetrisGame.Map.FieldSize), new Point(50 + _tetrisGame.Map.Columns * _tetrisGame.Map.FieldSize, 50 + i * _tetrisGame.Map.FieldSize));
+                g.DrawLine(Pens.White, new Point(50, 50 + i * _tetrisGame.Map.FieldSize), new Point(50 + _tetrisGame.Map.Columns * _tetrisGame.Map.FieldSize, 50 + i * _tetrisGame.Map.FieldSize));
             }
 
             for (int i = 0; i <= _tetrisGame.Map.Columns; i++)
             {
-                g.DrawLine(Pens.Black, new Point(50 + i * _tetrisGame.Map.FieldSize, 50), new Point(50 + i * _tetrisGame.Map.FieldSize, 50 + _tetrisGame.Map.Rows * _tetrisGame.Map.FieldSize));
+                g.DrawLine(Pens.White, new Point(50 + i * _tetrisGame.Map.FieldSize, 50), new Point(50 + i * _tetrisGame.Map.FieldSize, 50 + _tetrisGame.Map.Rows * _tetrisGame.Map.FieldSize));
             }
         }
 

@@ -53,7 +53,7 @@
             Menu.Items.AddRange(new ToolStripItem[] { gameSettings, gameControls, pauseButton });
             Menu.Location = new Point(0, 0);
             Menu.Name = "Menu";
-            Menu.Size = new Size(482, 24);
+            Menu.Size = new Size(484, 24);
             Menu.TabIndex = 0;
             Menu.Text = "File";
             // 
@@ -127,18 +127,20 @@
             statusStrip.Items.AddRange(new ToolStripItem[] { TimerTextBox, Timer });
             statusStrip.Location = new Point(0, 739);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(482, 22);
+            statusStrip.Size = new Size(484, 22);
             statusStrip.TabIndex = 1;
             statusStrip.Text = "statusStrip";
             // 
             // TimerTextBox
             // 
+            TimerTextBox.BackColor = SystemColors.Control;
             TimerTextBox.Name = "TimerTextBox";
             TimerTextBox.Size = new Size(36, 17);
             TimerTextBox.Text = "Time:";
             // 
             // Timer
             // 
+            Timer.BackColor = SystemColors.Control;
             Timer.Name = "Timer";
             Timer.Size = new Size(49, 17);
             Timer.Text = "00:00:00";
@@ -156,7 +158,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(482, 761);
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BackColor = Color.DarkViolet;
+            ClientSize = new Size(484, 761);
             Controls.Add(statusStrip);
             Controls.Add(Menu);
             DoubleBuffered = true;

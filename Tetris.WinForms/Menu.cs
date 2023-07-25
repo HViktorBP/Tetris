@@ -38,7 +38,27 @@ namespace Tetris.WinForms
                 _tetris = new Tetris(GameDifficulty.Hard, _dataAccess);
             }
 
+            SettingUpTetrisWindow(_tetris.TetrisGame.Difficulty);
             _tetris.ShowDialog();
+        }
+
+        private void SettingUpTetrisWindow(GameDifficulty difficulty)
+        {
+            if (difficulty == GameDifficulty.Easy)
+            {
+                _tetris.Width = 280;
+                _tetris.Height = 800;
+            }
+            else if (difficulty == GameDifficulty.Medium)
+            {
+                _tetris.Width = 400;
+                _tetris.Height = 700;
+            }
+            else
+            {
+                _tetris.Width = 475;
+                _tetris.Height = 624;
+            }
         }
 
         private async void ButtonGameLoad_Click(object sender, EventArgs e)
@@ -50,6 +70,7 @@ namespace Tetris.WinForms
                     _tetris = new Tetris();
                     await _tetris.TetrisGame.LoadGameAsync(openFile.FileName);
                     _tetris.LoadGame();
+                    SettingUpTetrisWindow(_tetris.TetrisGame.Difficulty);
                     _tetris.ShowDialog();
                 }
                 catch (TetrisDataEcxeption)

@@ -12,8 +12,6 @@ namespace Tetris.Model
         #region Variables
         private int _shapeSize;
 
-        private int[,] _shape = null!;
-
         private int[,] _currentRotation = null!;
 
         private int[,] _defaultRotation = null!;
@@ -43,7 +41,6 @@ namespace Tetris.Model
             {
                 case 1:
                     _shapeSize = 4;
-                    _shape = Shapes.Straight;
                     _currentRotation = _defaultRotation = new int[4, 4]
                     {
                         {0, 0, 0, 0 },
@@ -75,7 +72,6 @@ namespace Tetris.Model
                     break;
                 case 2:
                     _shapeSize = 2;
-                    _shape = Shapes.Square;
                     _currentRotation = _defaultRotation = _rotation90Degree = _rotation180Degree = _rotation270Degree = new int[2, 2]
                     {
                         {2, 2},
@@ -84,7 +80,6 @@ namespace Tetris.Model
                     break;
                 case 3:
                     _shapeSize = 3;
-                    _shape = Shapes.LType;
                     _currentRotation = _defaultRotation = new int[3, 3]
                     {
                         {3, 0, 0},
@@ -112,7 +107,6 @@ namespace Tetris.Model
                     break;
                 case 4:
                     _shapeSize = 3;
-                    _shape = Shapes.Triangle;
                     _currentRotation = _defaultRotation = new int[3, 3]
                     {
                         {0, 4, 0},
@@ -140,7 +134,6 @@ namespace Tetris.Model
                     break;
                 case 5:
                     _shapeSize = 3;
-                    _shape = Shapes.SType;
                     _currentRotation = _defaultRotation = new int[3, 3]
                     {
                         {0, 5, 5},
