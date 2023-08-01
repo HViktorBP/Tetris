@@ -22,6 +22,7 @@ namespace Tetris.WinForms
         private Timer _gameTimer = null!;
 
         private int _gameTime;
+
         #endregion
 
         #region Properties
@@ -148,9 +149,9 @@ namespace Tetris.WinForms
             Refresh();
         }
 
-        private void DrawMap(Graphics e) 
+        private void DrawMap(Graphics e)
         {
-            for (int i = 0; i < _tetrisGame.Map.Rows; i++)
+            for (int i = 2; i < _tetrisGame.Map.Rows; i++)
             {
                 for (int j = 0; j < _tetrisGame.Map.Columns; j++)
                 {
@@ -164,7 +165,7 @@ namespace Tetris.WinForms
                     }
                     if (_tetrisGame.Map.GetValue(i, j) == 3)
                     {
-                        e.FillRectangle(Brushes.Green, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.Black, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
                     if (_tetrisGame.Map.GetValue(i, j) == 4)
                     {
@@ -180,14 +181,25 @@ namespace Tetris.WinForms
 
         private void DrawGrid(Graphics g)
         {
-            for (int i = 0; i <= _tetrisGame.Map.Rows; i++)
+            for (int i = 2; i <= _tetrisGame.Map.Rows; i++)
             {
                 g.DrawLine(Pens.White, new Point(50, 50 + i * _tetrisGame.Map.FieldSize), new Point(50 + _tetrisGame.Map.Columns * _tetrisGame.Map.FieldSize, 50 + i * _tetrisGame.Map.FieldSize));
             }
 
             for (int i = 0; i <= _tetrisGame.Map.Columns; i++)
             {
-                g.DrawLine(Pens.White, new Point(50 + i * _tetrisGame.Map.FieldSize, 50), new Point(50 + i * _tetrisGame.Map.FieldSize, 50 + _tetrisGame.Map.Rows * _tetrisGame.Map.FieldSize));
+                if (_tetrisGame.Difficulty == GameDifficulty.Easy)
+                {
+                    g.DrawLine(Pens.White, new Point(50 + i * _tetrisGame.Map.FieldSize, 130), new Point(50 + i * _tetrisGame.Map.FieldSize, 50 + _tetrisGame.Map.Rows * _tetrisGame.Map.FieldSize));
+                }
+                else if (_tetrisGame.Difficulty == GameDifficulty.Medium)
+                {
+                    g.DrawLine(Pens.White, new Point(50 + i * _tetrisGame.Map.FieldSize, 120), new Point(50 + i * _tetrisGame.Map.FieldSize, 50 + _tetrisGame.Map.Rows * _tetrisGame.Map.FieldSize));
+                }
+                else
+                {
+                    g.DrawLine(Pens.White, new Point(50 + i * _tetrisGame.Map.FieldSize, 110), new Point(50 + i * _tetrisGame.Map.FieldSize, 50 + _tetrisGame.Map.Rows * _tetrisGame.Map.FieldSize));
+                }
             }
         }
 
@@ -226,6 +238,7 @@ namespace Tetris.WinForms
             _gameTime = 0;
 
             SetupMenus();
+            SettingUpTetrisWindow();
         }
 
         private async void saveGame_Click(object sender, EventArgs e)
@@ -267,6 +280,7 @@ namespace Tetris.WinForms
                     await _tetrisGame.LoadGameAsync(openFile.FileName);
                     saveGame.Enabled = true;
                     LoadGame();
+                    SettingUpTetrisWindow();
                 }
                 catch (TetrisDataEcxeption)
                 {
@@ -305,7 +319,7 @@ namespace Tetris.WinForms
             Boolean restartTimer = _gameTimer.Enabled;
             _gameTimer.Stop();
 
-            if (MessageBox.Show("Tou sure you want to leave the game?", "Tetris", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("You sure you want to leave the game?", "Tetris", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Close();
             }
@@ -321,16 +335,29 @@ namespace Tetris.WinForms
         private void easyDiff_Click(object sender, EventArgs e)
         {
             _tetrisGame.Difficulty = GameDifficulty.Easy;
+            FormSettingsForNewGame();
         }
 
         private void mediumDiff_Click(object sender, EventArgs e)
         {
             _tetrisGame.Difficulty = GameDifficulty.Medium;
+            FormSettingsForNewGame();
         }
 
         private void hardDiff_Click(object sender, EventArgs e)
         {
             _tetrisGame.Difficulty = GameDifficulty.Hard;
+            FormSettingsForNewGame();
+        }
+
+        private void FormSettingsForNewGame()
+        {
+            Hide();
+            _tetrisGame.NewGame();
+            SettingUpTetrisWindow();
+            SetupMenus();
+            _gameTime = 0;
+            Show();
         }
 
         private void newGame_Paint(object sender, PaintEventArgs e)
@@ -343,6 +370,22 @@ namespace Tetris.WinForms
         {
             DrawGrid(e.Graphics);
             DrawMap(e.Graphics);
+        }
+
+        private void Tetris_SizeChanged(object sender, EventArgs e)
+        {
+            if (_tetrisGame.Difficulty == GameDifficulty.Easy)
+            {
+                tetrisLabel.Location = new Point(5, 40);
+            }
+            else if (_tetrisGame.Difficulty == GameDifficulty.Medium)
+            {
+                tetrisLabel.Location = new Point(65, 35);
+            }
+            else
+            {
+                tetrisLabel.Location = new Point(106, 30);
+            }
         }
         #endregion
 
@@ -370,7 +413,25 @@ namespace Tetris.WinForms
 
             SetupMenus();
         }
-        #endregion
 
+        public void SettingUpTetrisWindow()
+        {
+            if (_tetrisGame.Difficulty == GameDifficulty.Easy)
+            {
+                Width = 277;
+                Height = 875;
+            }
+            else if (_tetrisGame.Difficulty == GameDifficulty.Medium)
+            {
+                Width = 400;
+                Height = 775;
+            }
+            else
+            {
+                Width = 475;
+                Height = 700;
+            }
+        }
+        #endregion
     }
 }

@@ -139,7 +139,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
-            ClientSize = new Size(284, 461);
+            ClientSize = new Size(278, 461);
             Controls.Add(ButtonGameLoad);
             Controls.Add(LabelDifficulties);
             Controls.Add(RadioButtonHardDiff);
@@ -147,6 +147,7 @@
             Controls.Add(RadioButtonEasyDiff);
             Controls.Add(GameLabel);
             Controls.Add(startButton);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Menu";
             StartPosition = FormStartPosition.CenterParent;

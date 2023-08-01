@@ -65,7 +65,7 @@ namespace Tetris.Model
             }
         }
 
-        public void ResetArea() // якщо  там є якесь ще значення крім нуля, то ми його стираємо адже карта змінюється
+        public void ResetArea()
         {
             for (int i = _shapeGameModel.PositionY; i < _shapeGameModel.PositionY + _shapeGameModel.Shape.ShapeSize; i++)
             {
@@ -77,7 +77,7 @@ namespace Tetris.Model
             }
         }
 
-        public bool Collide() // дивимося чи знизу є фігура або чи ми досягнули кінця 
+        public bool Collide()
         {
             for (int i = _shapeGameModel.PositionY; i < _shapeGameModel.PositionY + _shapeGameModel.Shape.ShapeSize; i++)
             {
@@ -201,6 +201,7 @@ namespace Tetris.Model
 
             _map = await _dataAccess.LoadAsync(path);
         }
+
         public async Task SaveGameAsync(String path)
         {
             if (_dataAccess == null)

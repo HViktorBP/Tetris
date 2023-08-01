@@ -31,19 +31,19 @@ namespace Tetris.Presistence
         {
             if (difficulty == GameDifficulty.Easy)
             {
-                _map = new int[16, 4];
+                _map = new int[18, 4];
                 _fieldSize = 40;
             }
 
             if (difficulty == GameDifficulty.Medium)
             {
-                _map = new int[16, 8];
+                _map = new int[18, 8];
                 _fieldSize = 35;
             }
 
             if (difficulty == GameDifficulty.Hard)
             {
-                _map = new int[16, 12];
+                _map = new int[18, 12];
                 _fieldSize = 30;
             }
 

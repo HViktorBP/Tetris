@@ -16,7 +16,7 @@ namespace Tetris.Presistence
                 {
                     String line = await reader.ReadLineAsync() ?? String.Empty;
                     String[] numbers = line.Split(' ');
-                    int rows = Int32.Parse(numbers[0]);
+                    int rows = Int32.Parse(numbers[0]) - 2;
                     int columns = Int32.Parse(numbers[1]);
 
                     TetrisMap table = null!;
@@ -35,7 +35,7 @@ namespace Tetris.Presistence
                         table = new TetrisMap(Model.GameDifficulty.Hard);
                     }
 
-                    for (int i = 0; i < rows; i++)
+                    for (int i = 2; i < rows; i++)
                     {
                         line = await reader.ReadLineAsync() ?? String.Empty;
                         numbers = line.Split(' ');
@@ -64,7 +64,7 @@ namespace Tetris.Presistence
                     writer.Write(table.Rows);
                     await writer.WriteLineAsync(" " + table.Columns);
 
-                    for (int i = 0; i < table.Rows; i++)
+                    for (int i = 2; i < table.Rows; i++)
                     {
                         for (int j = 0; j < table.Columns; j++)
                         {
