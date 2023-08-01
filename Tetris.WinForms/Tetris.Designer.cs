@@ -98,21 +98,21 @@
             // easyDiff
             // 
             easyDiff.Name = "easyDiff";
-            easyDiff.Size = new Size(180, 22);
+            easyDiff.Size = new Size(110, 22);
             easyDiff.Text = "4 x 16";
             easyDiff.Click += easyDiff_Click;
             // 
             // mediumDiff
             // 
             mediumDiff.Name = "mediumDiff";
-            mediumDiff.Size = new Size(180, 22);
+            mediumDiff.Size = new Size(110, 22);
             mediumDiff.Text = "8 x 16";
             mediumDiff.Click += mediumDiff_Click;
             // 
             // hardDiff
             // 
             hardDiff.Name = "hardDiff";
-            hardDiff.Size = new Size(180, 22);
+            hardDiff.Size = new Size(110, 22);
             hardDiff.Text = "12 x 16";
             hardDiff.Click += hardDiff_Click;
             // 
@@ -174,7 +174,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BackColor = Color.DarkViolet;
+            BackColor = Color.MediumPurple;
             ClientSize = new Size(484, 861);
             Controls.Add(tetrisLabel);
             Controls.Add(statusStrip);

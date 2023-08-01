@@ -41,7 +41,7 @@
             // 
             // startButton
             // 
-            startButton.BackColor = Color.DarkViolet;
+            startButton.BackColor = Color.MediumPurple;
             startButton.Font = new Font("Stencil", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
             startButton.ForeColor = Color.GhostWhite;
             startButton.Location = new Point(66, 367);
@@ -123,7 +123,7 @@
             // 
             // ButtonGameLoad
             // 
-            ButtonGameLoad.BackColor = Color.DarkViolet;
+            ButtonGameLoad.BackColor = Color.MediumPurple;
             ButtonGameLoad.Font = new Font("Stencil", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
             ButtonGameLoad.ForeColor = Color.GhostWhite;
             ButtonGameLoad.Location = new Point(66, 295);
@@ -138,7 +138,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackColor = Color.MediumPurple;
             ClientSize = new Size(278, 461);
             Controls.Add(ButtonGameLoad);
             Controls.Add(LabelDifficulties);

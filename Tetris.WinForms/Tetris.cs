@@ -22,7 +22,6 @@ namespace Tetris.WinForms
         private Timer _gameTimer = null!;
 
         private int _gameTime;
-
         #endregion
 
         #region Properties
@@ -157,23 +156,23 @@ namespace Tetris.WinForms
                 {
                     if (_tetrisGame.Map.GetValue(i, j) == 1)
                     {
-                        e.FillRectangle(Brushes.Red, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.MediumSeaGreen, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
                     if (_tetrisGame.Map.GetValue(i, j) == 2)
                     {
-                        e.FillRectangle(Brushes.Yellow, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.Goldenrod, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
                     if (_tetrisGame.Map.GetValue(i, j) == 3)
                     {
-                        e.FillRectangle(Brushes.Black, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.DimGray, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
                     if (_tetrisGame.Map.GetValue(i, j) == 4)
                     {
-                        e.FillRectangle(Brushes.Blue, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.RoyalBlue, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
                     if (_tetrisGame.Map.GetValue(i, j) == 5)
                     {
-                        e.FillRectangle(Brushes.Orange, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
+                        e.FillRectangle(Brushes.Tomato, new Rectangle(50 + j * (_tetrisGame.Map.FieldSize) + 1, 50 + i * (_tetrisGame.Map.FieldSize) + 1, _tetrisGame.Map.FieldSize - 1, _tetrisGame.Map.FieldSize - 1));
                     }
                 }
             }

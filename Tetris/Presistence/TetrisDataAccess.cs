@@ -8,6 +8,13 @@ namespace Tetris.Presistence
 {
     public class TetrisDataAccess : ITetrisDataAccess
     {
+        /// <summary>
+        /// The LoadAsync method will save the data of the tetris game into a file.
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="TetrisDataEcxeption"></exception>
         public async Task<TetrisMap> LoadAsync(string path)
         {
             try
