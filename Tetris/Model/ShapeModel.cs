@@ -29,12 +29,12 @@ namespace Tetris.Model
 
         #region Constructor
         public ShapeModel() {
-            this.GenerateMatrix();
+            GenerateShape();
         }
         #endregion
 
         #region Private methods
-        private void GenerateMatrix()
+        private void GenerateShape()
         {
             Random temp = new Random();
             switch (temp.Next(1, 6))

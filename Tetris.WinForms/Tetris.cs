@@ -26,6 +26,7 @@ namespace Tetris.WinForms
 
         #region Properties
         public TetrisGameModel TetrisGame { get { return _tetrisGame; } }
+
         public Timer GameTimer { get { return _gameTimer; } }
         #endregion
 
@@ -108,6 +109,9 @@ namespace Tetris.WinForms
                         Refresh();
                     }
                     break;
+                //case Keys.Down:
+
+                //    break;
             }
         }
 
