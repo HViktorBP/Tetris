@@ -45,6 +45,8 @@
             openFile = new OpenFileDialog();
             saveFile = new SaveFileDialog();
             tetrisLabel = new Label();
+            PointsLabel = new ToolStripStatusLabel();
+            PointsValue = new ToolStripStatusLabel();
             Menu.SuspendLayout();
             statusStrip.SuspendLayout();
             SuspendLayout();
@@ -125,7 +127,7 @@
             // 
             // statusStrip
             // 
-            statusStrip.Items.AddRange(new ToolStripItem[] { TimerTextBox, Timer });
+            statusStrip.Items.AddRange(new ToolStripItem[] { TimerTextBox, Timer, PointsLabel, PointsValue });
             statusStrip.Location = new Point(0, 839);
             statusStrip.Name = "statusStrip";
             statusStrip.Size = new Size(484, 22);
@@ -168,6 +170,22 @@
             tetrisLabel.TabIndex = 2;
             tetrisLabel.Text = "Tetris";
             tetrisLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // PointsLabel
+            // 
+            PointsLabel.BackColor = SystemColors.ButtonFace;
+            PointsLabel.Name = "PointsLabel";
+            PointsLabel.Size = new Size(43, 17);
+            PointsLabel.Text = "Points:";
+            PointsLabel.VisitedLinkColor = Color.BlueViolet;
+            // 
+            // PointsValue
+            // 
+            PointsValue.BackColor = SystemColors.ButtonFace;
+            PointsValue.Name = "PointsValue";
+            PointsValue.Size = new Size(13, 17);
+            PointsValue.Text = "0";
+            PointsValue.TextAlign = ContentAlignment.MiddleRight;
             // 
             // Tetris
             // 
@@ -214,5 +232,7 @@
         private OpenFileDialog openFile;
         private SaveFileDialog saveFile;
         private Label tetrisLabel;
+        private ToolStripStatusLabel PointsLabel;
+        private ToolStripStatusLabel PointsValue;
     }
 }

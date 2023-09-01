@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Accessibility;
+using Microsoft.VisualBasic;
 using System.CodeDom.Compiler;
 using System.Drawing;
 using System.Reflection;
@@ -50,6 +51,7 @@ namespace Tetris.WinForms
             _gameTimer.Start();
             _timerForStatusBar.Start();
 
+            _tetrisGame.OnPointsChanged += _tetrisGame_OnPointsChanged; ;
             Refresh();
         }
 
@@ -109,9 +111,9 @@ namespace Tetris.WinForms
                         Refresh();
                     }
                     break;
-                //case Keys.Down:
+                    //case Keys.Down:
 
-                //    break;
+                    //    break;
             }
         }
 
@@ -220,6 +222,8 @@ namespace Tetris.WinForms
             int hour = _gameTime / 3600;
             int sec = _gameTime % 60;
             Timer.Text = (hour < 10 ? "0" + hour : hour) + ":" + (minute < 10 ? "0" + minute : minute) + ":" + (sec < 10 ? "0" + sec : sec);
+
+            PointsValue.Text = _tetrisGame.Points.ToString();
         }
 
         private void OnPaint(object sender, PaintEventArgs e)
@@ -390,6 +394,12 @@ namespace Tetris.WinForms
                 tetrisLabel.Location = new Point(106, 30);
             }
         }
+
+        private void _tetrisGame_OnPointsChanged(object? sender, int e)
+        {
+            PointsValue.Text = e.ToString();
+        }
+
         #endregion
 
         #region Public methods
@@ -435,6 +445,7 @@ namespace Tetris.WinForms
                 Height = 700;
             }
         }
+
         #endregion
     }
 }

@@ -18,12 +18,21 @@ namespace Tetris.Model
         private TetrisMap _map = null!;
         
         private GameDifficulty _difficulty;
+
+        private int _points;
         #endregion
 
         #region Properties
         public ShapeGameModel ShapeGameModel { get { return _shapeGameModel; } set { _shapeGameModel = value; } }
         public TetrisMap Map { get { return _map; } set { _map = value; } }
         public GameDifficulty Difficulty { get { return _difficulty; } set { _difficulty = value; } }
+        public int Points { 
+            get { return _points; }
+            set { 
+                _points = value;
+                OnPointsChanged?.Invoke(this, _points);
+                }
+        }
         #endregion
 
         #region Constructor
@@ -49,6 +58,7 @@ namespace Tetris.Model
             }
 
             _difficulty = difficulty;
+            _points = 0;
         }
         #endregion
 
@@ -148,8 +158,7 @@ namespace Tetris.Model
 
         public void SliceMap()
         {
-            int fields = 0;
-            int curRemovedLines = 0;
+            int fields, curRemovedLines = 0;
 
             for (int i = 0; i < _map.Rows; i++)
             {
@@ -173,6 +182,8 @@ namespace Tetris.Model
                     }
                 }
             }
+
+            _points += curRemovedLines * 100;
         }
 
         public void NewGame()
@@ -209,6 +220,10 @@ namespace Tetris.Model
 
             await _dataAccess.SaveAsync(path, _map);
         }
+        #endregion
+
+        #region Events
+        public event EventHandler<int> OnPointsChanged;
         #endregion
     }
 }
